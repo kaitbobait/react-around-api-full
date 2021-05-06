@@ -28,9 +28,10 @@ function getOneUser(req, res) {
     });
 }
 
+//TODO hash password before saving
 function createUser(req, res) {
   const { name, about, avatar } = req.body;
-  return User.create({ name, about, avatar })
+  return User.create({ name, about, avatar, email, password })
     .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.name === 'CastError') return res.status(400).send({ error: 'invalid id number' });
