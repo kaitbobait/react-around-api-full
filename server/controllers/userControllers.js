@@ -10,7 +10,6 @@ const User = require("../models/user");
   _id: "d285e3dceed844f902650f40"
     } 
  */
-
 function login(req, res) {
   //gets the email and password from the REQUEST
   const { email, password } = req.body;
@@ -18,18 +17,12 @@ function login(req, res) {
   if (!password || !email)
     return res.status(400).send({ message: "email or password is invalid" });
   //checks if email already exists
-  Cards.findOne({ email })
+  User.findUserByCredentials({ email, password })
     .then((user) => {
-      if (user)
-        return res.status(403).send({ message: "email already exists" });
-      //if doesn't already exist, creates a new user
-      return Cards.create({ email, password })
-        .then((user) => {
-          return res.status(200).send(user);
-        })
-        .catch((err) => res.status(400).send(err));
+      const token = jwt.sign({_id: user._id}, 'some-secret-key')
+      res.send({token});
     })
-    .catch((err) => res.status(400).send(err));
+    .catch((err) => res.status(401).send(err));
 }
 
 function getUsers(req, res) {
@@ -64,14 +57,21 @@ function getOneUser(req, res) {
 
 //TODO hash password before saving
 function createUser(req, res) {
-  const { name, about, avatar } = req.body;
-  return User.create({ name, about, avatar, email, password })
-    .then((user) => res.status(200).send(user))
-    .catch((err) => {
-      if (err.name === "CastError")
-        return res.status(400).send({ error: "invalid id number" });
-      return res.status(400).send(err);
-    });
+  const { name, about, avatar, email, password } = req.body;
+
+  if(!email || !password) return res.status(400).send({message: 'email or password invalid'})
+  //check to see if email already exists
+  return User.findOne({email})
+    .then(user => {
+      if(user) return res.status(403).send({message: 'email already exists'})
+
+      return User.create({ name, about, avatar, email, password })
+        .then((user) => res.status(200).send(user))
+        .catch((err) => {
+          if (err.name === "CastError") return res.status(400).send({ error: "invalid id number" });
+          return res.status(400).send(err);
+        });
+    })
 }
 
 // works
@@ -114,6 +114,7 @@ function updateUserAvatar(req, res) {
 }
 
 module.exports = {
+  login,
   getUsers,
   getOneUser,
   createUser,
