@@ -1,5 +1,6 @@
 const Cards = require('../models/cards');
 
+
 function getCards(req, res) {
   return Cards.find({})
     .then((cards) => {
@@ -14,7 +15,6 @@ function getCards(req, res) {
 // returns error 400, ownerId is undefined
 function createCard(req, res) {
   const { name, link } = req.body;
-
   return Cards.create({ name, link, owner: req.user._id })
     .then((card) => {
       res.status(200).send(card);

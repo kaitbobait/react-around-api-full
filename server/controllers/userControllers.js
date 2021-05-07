@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const bcrypt = require('bcryptjs');
 
 //TODO
 /**
@@ -18,11 +19,11 @@ function login(req, res) {
     return res.status(400).send({ message: "email or password is invalid" });
   //checks if email already exists
   User.findUserByCredentials({ email, password })
-    .then((user) => {
-      const token = jwt.sign({_id: user._id}, 'some-secret-key')
-      res.send({token});
-    })
-    .catch((err) => res.status(401).send(err));
+      .then((user) => {
+        const token = jwt.sign({_id: user._id}, 'some-secret-key')
+        res.send(user, token);
+      })
+      .catch((err) => res.status(401).send(err));
 }
 
 function getUsers(req, res) {
@@ -65,7 +66,15 @@ function createUser(req, res) {
     .then(user => {
       if(user) return res.status(403).send({message: 'email already exists'})
 
-      return User.create({ name, about, avatar, email, password })
+      // hashing the password
+      bcrypt.hash(req.body.password, 10)
+      .then(hash => User.create({
+        name, 
+        about, 
+        avatar, 
+        email, 
+        password: hash
+      }))
         .then((user) => res.status(200).send(user))
         .catch((err) => {
           if (err.name === "CastError") return res.status(400).send({ error: "invalid id number" });
