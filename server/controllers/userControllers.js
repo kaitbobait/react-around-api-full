@@ -1,11 +1,12 @@
 const User = require("../models/user");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
 
 //TODO
 /**
  * create a login controller
  * then, authenticates the email/password
- * if email/pass are correct -->  create a JWT --> expires: 1 week
+ * if email/pass are correct -->  create a JWT --> //TODO expires: 1 week
  * only the _id property should be written to the JWT payload:
  * {
   _id: "d285e3dceed844f902650f40"
@@ -19,11 +20,11 @@ function login(req, res) {
     return res.status(400).send({ message: "email or password is invalid" });
   //checks if email already exists
   User.findUserByCredentials({ email, password })
-      .then((user) => {
-        const token = jwt.sign({_id: user._id}, 'some-secret-key')
-        res.send(user, token);
-      })
-      .catch((err) => res.status(401).send(err));
+    .then((user) => {
+      const token = jwt.sign({ _id: user._id }, "some-secret-key",{expiresIn: '7d'});
+      res.send(user, token);
+    })
+    .catch((err) => res.status(401).send(err));
 }
 
 function getUsers(req, res) {
@@ -56,31 +57,35 @@ function getOneUser(req, res) {
     });
 }
 
-//TODO hash password before saving
+//COMPLETE hash password before saving
 function createUser(req, res) {
   const { name, about, avatar, email, password } = req.body;
 
-  if(!email || !password) return res.status(400).send({message: 'email or password invalid'})
+  if (!email || !password)
+    return res.status(400).send({ message: "email or password invalid" });
   //check to see if email already exists
-  return User.findOne({email})
-    .then(user => {
-      if(user) return res.status(403).send({message: 'email already exists'})
+  return User.findOne({ email }).then((user) => {
+    if (user) return res.status(403).send({ message: "email already exists" });
 
-      // hashing the password
-      bcrypt.hash(req.body.password, 10)
-      .then(hash => User.create({
-        name, 
-        about, 
-        avatar, 
-        email, 
-        password: hash
-      }))
-        .then((user) => res.status(200).send(user))
-        .catch((err) => {
-          if (err.name === "CastError") return res.status(400).send({ error: "invalid id number" });
-          return res.status(400).send(err);
-        });
-    })
+    // hashing the password
+    bcrypt
+      .hash(req.body.password, 10)
+      .then((hash) =>
+        User.create({
+          name,
+          about,
+          avatar,
+          email,
+          password: hash,
+        })
+      )
+      .then((user) => res.status(200).send(user))
+      .catch((err) => {
+        if (err.name === "CastError")
+          return res.status(400).send({ error: "invalid id number" });
+        return res.status(400).send(err);
+      });
+  });
 }
 
 // works
