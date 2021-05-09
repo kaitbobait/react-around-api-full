@@ -15,17 +15,17 @@ const jwt = require('jsonwebtoken');
 function login(req, res) {
   //gets the email and password from the REQUEST
   const { email, password } = req.body;
-  //checks if a password/email was entered correctly
-  if (!password || !email)
-    return res.status(400).send({ message: "email or password is invalid" });
   //checks if email already exists
   User.findUserByCredentials({ email, password })
     .then((user) => {
-      //assigning a jwt to localStorage
-      const token = jwt.sign({ _id: user._id }, "some-secret-key",{expiresIn: '7d'});
-      res.send(user, token);
+      if(!user) {
+        return Promise.reject(new Error('Incorrect email or password'));
+      }
 
-      //TODO assign a jwt to a cookie instead of localStorage
+      const token = jwt.sign({ _id: user._id }, "some-secret-key",{expiresIn: '7d'});
+      //assign token to a cookie
+      res.cookie('token', token, {httpOnly: true});
+      res.send(token);
     })
     .catch((err) => res.status(401).send(err));
 }
