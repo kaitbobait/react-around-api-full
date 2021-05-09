@@ -11,6 +11,8 @@ const helmet = require('helmet');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 
+const { login, createUser } = require('./controllers/userControllers');
+
 mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -34,6 +36,10 @@ app.use(express.json());
 
 // protects app from web vulnerabilities by setting HTTP headers
 app.use(helmet());
+
+app.post('/signin', login);
+app.post('/signup', createUser);
+
 app.use('/', userRouter);
 app.use('/', cardRouter);
 app.get('*', (req, res) => {

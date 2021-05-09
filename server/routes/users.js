@@ -3,11 +3,12 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  getUsers, getOneUser, createUser, updateUser, updateUserAvatar,
+  getUsers, getOneUser, updateUser, updateUserAvatar,
 } = require('../controllers/userControllers');
 
 router.get('/users', getUsers);
-router.post('/users', createUser);
+
+//router.post('/users', createUser); //TODO delete - added to app.js
 
 router.get('/users/:id', getOneUser);
 

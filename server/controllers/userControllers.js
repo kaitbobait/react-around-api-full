@@ -21,8 +21,11 @@ function login(req, res) {
   //checks if email already exists
   User.findUserByCredentials({ email, password })
     .then((user) => {
+      //assigning a jwt to localStorage
       const token = jwt.sign({ _id: user._id }, "some-secret-key",{expiresIn: '7d'});
       res.send(user, token);
+
+      //TODO assign a jwt to a cookie instead of localStorage
     })
     .catch((err) => res.status(401).send(err));
 }
