@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const generateToken = require('../utils/jwt');
+const { generateToken } = require('../utils/jwt');
 
 //TODO
 /**
@@ -17,18 +17,23 @@ function login(req, res) {
   //gets the email and password from the REQUEST
   const { email, password } = req.body;
   //checks if email already exists
-  User.findUserByCredentials({ email, password })
+  User.findUserByCredentials(email, password)
     .then((user) => {
       if(!user) {
         return Promise.reject(new Error('Incorrect email or password'));
       }
       
       const token = generateToken(user._id);
+      console.log(token);
       //assign token to a cookie
       res.cookie('token', token, {httpOnly: true});
-      res.send(token);
+      //res.send(token);
+      res.send('test test');
     })
-    .catch((err) => res.status(401).send(err));
+    .catch((err) => {
+      res.status(401).send(err)
+    });
+  
 }
 
 function getUsers(req, res) {

@@ -31,11 +31,11 @@ app.use(express.json());
 // protects app from web vulnerabilities by setting HTTP headers
 app.use(helmet());
 
-app.post('/signin', auth, login);
+app.post('/signin', login);
 app.post('/signup', createUser);
 
-app.use('/', userRouter);
-app.use('/', cardRouter);
+app.use('/', auth, userRouter);
+app.use('/', auth, cardRouter);
 
 app.get('*', (req, res) => {
   res.status(404).send({ message: 'Requested resource not found' });

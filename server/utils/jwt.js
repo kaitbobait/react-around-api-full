@@ -9,4 +9,4 @@ const generateToken = (id) => {jwt.sign(
   console.log(`this is the user id passed into generateToken ${id}`);
 };
 
-module.exports = { generateToken };
+module.exports = { generateToken }; 
