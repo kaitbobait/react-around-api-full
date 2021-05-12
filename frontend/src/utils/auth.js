@@ -12,7 +12,6 @@ class AuthApi {
     return Promise.reject(`Error: ${res.status}`);
   }
 
-  //doesn't work
   register(email, password) {
     return fetch(`${this._baseUrl}/signup`, {
       method: "POST",
@@ -70,7 +69,8 @@ class AuthApi {
 }
 
 const auth = new AuthApi({
-  baseUrl: "https://register.nomoreparties.co",
+  //"https://register.nomoreparties.co" // old url
+  baseUrl: "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
   },

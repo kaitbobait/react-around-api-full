@@ -136,7 +136,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "https://around.nomoreparties.co/v1/group-8",
+  baseUrl: "http://localhost:3000",
   headers: {
     authorization: "b69d5aa5-1ef4-42e6-80ff-c5b2987c86bb",
     "Content-Type": "application/json"
