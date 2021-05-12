@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const generateToken = require('../utils/jwt');
 
 //TODO
 /**
@@ -21,8 +22,8 @@ function login(req, res) {
       if(!user) {
         return Promise.reject(new Error('Incorrect email or password'));
       }
-//TODO replace token here with jwt.js created token
-      const token = jwt.sign({ _id: user._id }, "some-secret-key", {expiresIn: '7d'});
+      
+      const token = generateToken(user._id);
       //assign token to a cookie
       res.cookie('token', token, {httpOnly: true});
       res.send(token);
