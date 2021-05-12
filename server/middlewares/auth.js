@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 //        next(); 
 // if something is wrong - return 401 error
 
+//URGENT not receiving token from header
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
@@ -13,7 +14,7 @@ module.exports = (req, res, next) => {
   if (!authorization || !authorization.startsWith('Bearer ')) {
     return res
       .status(401)
-      .send({ message: 'Authorization required' });
+      .send({ message: 'Authorization required - no bearer' });
   }
   // getting the token as a string
   const token = authorization.replace('Bearer ', '');
@@ -27,7 +28,7 @@ module.exports = (req, res, next) => {
     // we return an error if something goes wrong
     return res
       .status(401)
-      .send({ message: 'Authorization required' });
+      .send({ message: 'Authorization required - payload not verified' });
   }
 
   req.user = payload; // assigning the payload to the request object
