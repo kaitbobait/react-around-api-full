@@ -10,10 +10,9 @@ const helmet = require('helmet');
 
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
+const auth = require('./middlewares/auth');
 
 const { login, createUser } = require('./controllers/userControllers');
-
-const auth = require('./middlewares/auth');
 
 mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
@@ -39,11 +38,12 @@ app.use(express.json());
 // protects app from web vulnerabilities by setting HTTP headers
 app.use(helmet());
 
-app.post('/signin', login);
+app.post('/signin', auth, login);
 app.post('/signup', createUser);
 
-app.use('/', auth, userRouter);
-app.use('/', auth, cardRouter);
+app.use('/', userRouter);
+app.use('/', cardRouter);
+
 app.get('*', (req, res) => {
   res.status(404).send({ message: 'Requested resource not found' });
 });

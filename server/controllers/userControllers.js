@@ -22,7 +22,7 @@ function login(req, res) {
         return Promise.reject(new Error('Incorrect email or password'));
       }
 
-      const token = jwt.sign({ _id: user._id }, "some-secret-key",{expiresIn: '7d'});
+      const token = jwt.sign({ _id: user._id }, "some-secret-key", {expiresIn: '7d'});
       //assign token to a cookie
       res.cookie('token', token, {httpOnly: true});
       res.send(token);
@@ -64,8 +64,9 @@ function getOneUser(req, res) {
 function createUser(req, res) {
   const { name, about, avatar, email, password } = req.body;
 
-  if (!email || !password)
+  if (!email || !password){
     return res.status(400).send({ message: "email or password invalid" });
+  }
   //check to see if email already exists
   return User.findOne({ email }).then((user) => {
     if (user) return res.status(403).send({ message: "email already exists" });

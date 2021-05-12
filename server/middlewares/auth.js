@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 //        next(); 
 // if something is wrong - return 401 error
 
-const auth = (req, res) => {
+module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
   // checks to see if there is an authorization header and starts with 'bearer'
@@ -21,7 +21,7 @@ const auth = (req, res) => {
 
   try {
   // trying to verify the token
-  // verify() returns the decoded payload
+  // if valid, verify() returns the decoded payload
     const payload = jwt.verify(token, 'some-secret-key');
   } catch (err) {
     // we return an error if something goes wrong
@@ -31,6 +31,8 @@ const auth = (req, res) => {
   }
 
   req.user = payload; // assigning the payload to the request object
+  console.log(payload);
+  console.log(req.user);
 
   next(); // sending the request to the next middleware
 
