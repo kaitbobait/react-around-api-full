@@ -17,7 +17,7 @@ class AuthApi {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": this._contentType,
+        "Content-Type": this._contentType
       },
       body: JSON.stringify({ email, password }),
     })

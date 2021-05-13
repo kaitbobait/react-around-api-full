@@ -204,12 +204,11 @@ function App() {
   const [message, setMessage] = React.useState("");
   const [userData, setUserData] = React.useState({});
 
-  //why use useEffect here?
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
+  useEffect(() => {
+    
     if (token) {
-      //console.log(localStorage.getItem('token')); undefined
       auth
         .checkToken(token)
         .then((res) => {
@@ -258,18 +257,19 @@ function App() {
     evt.preventDefault();
 
     if (!email || !password) {
+      console.log('email or password not working')
       return;
     }
 
     auth
       .authorize(email, password)
       .then((data) => {
-        //console.log(data);
+        //console.log('data' + data);
         if (!data) {
           //sets modal to true(to open it up)
           handleLoginModal();
           handleFail();
-          console.log(isFail);
+          //console.log(isFail);
           throw new Error("user does not exist");
         }
         if (data.token) {
