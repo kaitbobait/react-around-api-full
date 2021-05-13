@@ -41,6 +41,11 @@ app.get('*', (req, res) => {
   res.status(404).send({ message: 'Requested resource not found' });
 });
 
+// app.use((err, req, res, next) => {
+//   res.status(500).send({ message: err.message });
+//   next(new Error('Authorization error'));
+// })
+
 app.listen(PORT, () => {
   // if everything works fine, the console will show which port the application is listening to
   console.log(`App listening at port ${PORT}, k byeBYE!`);
