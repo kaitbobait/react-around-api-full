@@ -1,6 +1,5 @@
 
 const jwt = require('jsonwebtoken');
-const { CurrentUserContext } = require('../../frontend/src/contexts/CurrentUserContext');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 const generateToken = (id) => {jwt.sign(

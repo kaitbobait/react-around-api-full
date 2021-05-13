@@ -1,10 +1,9 @@
-
 /**
  * works with the API
  * All requests are methods of this Class
  */
 class Api {
-  constructor({baseUrl, headers}) {
+  constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._authorize = headers.authorization;
     this._contentType = headers["Content-Type"];
@@ -13,8 +12,8 @@ class Api {
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
-    } else{
-    // if server returns an error, reject the promise
+    } else {
+      // if server returns an error, reject the promise
       return Promise.reject(`Error: ${res.status}`);
     }
   }
@@ -23,13 +22,11 @@ class Api {
     return fetch(`${this._baseUrl}/cards`, {
       method: "GET",
       headers: {
-        authorization: this._authorize
-        
-      }
-    })
-      .then((res) => {
-        return this._checkResponse(res);
-      })
+        authorization: this._authorize,
+      },
+    }).then((res) => {
+      return this._checkResponse(res);
+    });
   }
 
   // GETs information for the user profile
@@ -37,12 +34,11 @@ class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: {
-        authorization: this._authorize
-      }
-    })
-      .then((res) => {
-        return this._checkResponse(res);
-      })
+        authorization: this._authorize,
+      },
+    }).then((res) => {
+      return this._checkResponse(res);
+    });
   }
 
   // modified the profile text content
@@ -51,16 +47,15 @@ class Api {
       method: "PATCH",
       headers: {
         authorization: this._authorize,
-        "Content-Type": this._contentType
+        "Content-Type": this._contentType,
       },
       body: JSON.stringify({
         name: values.name,
-        about: values.about
-      })
-    })
-    .then((res) => {
+        about: values.about,
+      }),
+    }).then((res) => {
       return this._checkResponse(res);
-    })
+    });
   }
 
   editAvatar(link) {
@@ -68,81 +63,71 @@ class Api {
       method: "PATCH",
       headers: {
         authorization: this._authorize,
-        "Content-Type": this._contentType
+        "Content-Type": this._contentType,
       },
       body: JSON.stringify({
-        avatar: link
-      })
-    })
-    .then((res) => {
+        avatar: link,
+      }),
+    }).then((res) => {
       return this._checkResponse(res);
-    })
+    });
   }
-
 
   addCard(data) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: {
         authorization: this._authorize,
-        "Content-Type": this._contentType
+        "Content-Type": this._contentType,
       },
       body: JSON.stringify({
         name: data.name,
-        link: data.link
-      })
-    })
-    .then((res) => {
+        link: data.link,
+      }),
+    }).then((res) => {
       return this._checkResponse(res);
-    })
+    });
   }
 
   changeLikeCardStatus(cardId, isLiked) {
-    
     let callMethod;
-    if(!isLiked) {
+    if (!isLiked) {
       callMethod = "PUT";
-        
     } else {
-        callMethod = "DELETE";
-      }
-    
+      callMethod = "DELETE";
+    }
+
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: callMethod,
       headers: {
-        authorization: this._authorize  
-      }
-    })
-      .then(res => {
-        return this._checkResponse(res);
-      })
+        authorization: this._authorize,
+      },
+    }).then((res) => {
+      return this._checkResponse(res);
+    });
   }
-
 
   deleteCard(cardId) {
     console.log(arguments);
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
         authorization: this._authorize,
-        "Content-Type": this._contentType
-      }
-    })
-    .then(res => {
+        "Content-Type": this._contentType,
+      },
+    }).then((res) => {
       return this._checkResponse(res);
-    })
+    });
   }
-  
 }
 
 const api = new Api({
   baseUrl: "http://localhost:3000",
   headers: {
     //TODO change hard coded token
-    authorization: `Bearer ${localStorage.getItem('token')}`,
-    "Content-Type": "application/json"
-  }
+    authorization: `Bearer ${localStorage.getItem("token")}`,
+    "Content-Type": "application/json",
+  },
 });
-
 
 export default api;
