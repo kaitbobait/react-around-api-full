@@ -25,7 +25,7 @@ function login(req, res) {
       
       const token = generateToken(user._id);
       console.log('token', token);// undefined
-      console.log(user._id); //returns id
+      //console.log(user._id); //returns id
       //assign token to a cookie
       res.cookie('token', token, {httpOnly: true});
       res.send(token);
