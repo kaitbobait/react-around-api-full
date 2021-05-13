@@ -139,7 +139,7 @@ const api = new Api({
   baseUrl: "http://localhost:3000",
   headers: {
     //TODO change hard coded token
-    authorization: "b69d5aa5-1ef4-42e6-80ff-c5b2987c86bb",
+    authorization: `Bearer ${localStorage.getItem('token')}`,
     "Content-Type": "application/json"
   }
 });
