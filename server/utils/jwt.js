@@ -9,4 +9,12 @@ const generateToken = (id) => {jwt.sign(
   console.log(`this is the user id passed into generateToken ${id}`);
 };
 
+const isAuthorized = (token) => {
+  jwt.verify(token, JWT_SECRET, (err, decoded ) => {
+    if(err) return false;
+
+    return 
+  })
+}
+
 module.exports = { generateToken }; 
