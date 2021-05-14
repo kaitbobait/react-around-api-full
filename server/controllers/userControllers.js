@@ -14,7 +14,7 @@ const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError } = r
   _id: "d285e3dceed844f902650f40"
     } 
  */
-function login(req, res) {
+function login(req, res, next) {
   //gets the email and password from the REQUEST
   const { email, password } = req.body;
   //checks if email already exists
@@ -35,7 +35,7 @@ function login(req, res) {
   
 }
 
-function getCurrentUser(req, res) {
+function getCurrentUser(req, res, next) {
   console.log(req.user);
   return User.findById(req.user._id)
   .then((user) => {
@@ -49,7 +49,7 @@ function getCurrentUser(req, res) {
 }
 
 // is this needed?
-function getUsers(req, res) {
+function getUsers(req, res, next) {
   return User.find({})
     .then((users) => {
       if (users) {
@@ -61,7 +61,7 @@ function getUsers(req, res) {
 }
 
 //is this needed?
-function getOneUser(req, res) {
+function getOneUser(req, res, next) {
   return User.findById(req.params.id)
     .then((user) => {
       if (!user) {
@@ -73,7 +73,7 @@ function getOneUser(req, res) {
 }
 
 //COMPLETE hash password before saving
-function createUser(req, res) {
+function createUser(req, res, next) {
   const { name, about, avatar, email, password } = req.body;
 
   if (!email || !password){
@@ -101,7 +101,7 @@ function createUser(req, res) {
 }
 
 // works
-function updateUser(req, res) {
+function updateUser(req, res, next) {
   return (
     User.findByIdAndUpdate(
       req.user._id,
@@ -120,7 +120,7 @@ function updateUser(req, res) {
 }
 
 // returns 404 not found
-function updateUserAvatar(req, res) {
+function updateUserAvatar(req, res, next) {
   return User.findByIdAndUpdate(
     req.user._id,
     { avatar: "" },

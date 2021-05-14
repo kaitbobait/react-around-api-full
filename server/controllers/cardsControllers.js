@@ -2,7 +2,7 @@ const Cards = require("../models/cards");
 const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError } = require('../middlewares/errors');
 //TODO add throw errors
 
-function getCards(req, res) {
+function getCards(req, res, next) {
   return Cards.find({})
     .then((cards) => {
       res.status(200).send(cards);
@@ -11,7 +11,7 @@ function getCards(req, res) {
 }
 
 // returns error 400, ownerId is undefined
-function createCard(req, res) {
+function createCard(req, res, next) {
   const { name, link } = req.body;
   return Cards.create({ name, link, owner: req.user._id })
     .then((card) => {
@@ -24,7 +24,7 @@ function createCard(req, res) {
 }
 
 // works - was originally putting the owner id in instead of objectId
-function deleteCard(req, res) {
+function deleteCard(req, res, next) {
   return Cards.findByIdAndRemove(req.params.cardId)
     .then((user) => {
       if (user) {
@@ -37,7 +37,7 @@ function deleteCard(req, res) {
 }
 
 // works
-function addLike(req, res) {
+function addLike(req, res, next) {
   return Cards.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } }, // add _id to the array if it's not there yet
@@ -54,7 +54,7 @@ function addLike(req, res) {
 }
 
 // works
-function deleteLike(req, res) {
+function deleteLike(req, res, next) {
   return Cards.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } }, // remove _id from the array
