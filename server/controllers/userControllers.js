@@ -2,6 +2,7 @@ const User = require("../models/user");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { generateToken } = require('../utils/jwt');
+const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError } = require('../middlewares/errors');
 
 //TODO
 /**
@@ -20,7 +21,7 @@ function login(req, res) {
   User.findUserByCredentials(email, password)
     .then((user) => {
       if(!user) {
-        return Promise.reject(new Error('Incorrect email or password'));
+        return Promise.reject(new AuthError('Authorization Error: Incorrect email or password'));
       }
       
       const token = generateToken(user._id);
@@ -30,9 +31,7 @@ function login(req, res) {
       res.cookie('token', token, {httpOnly: true});
       res.send(token);
     })
-    .catch((err) => {
-      res.status(401).send(err)
-    });
+    .catch(next);
   
 }
 
@@ -43,30 +42,22 @@ function getCurrentUser(req, res) {
     if(user) {
       return res.status(200).send(user);
     }
-    return res.status(404).json({ message: "User not found" });
+    return Promise.reject(new NotFoundError ("User not found"));
   })
-  .catch((err) => {
-    if (err.name === "CastError"){
-      return res.status(400).send({ error: "invalid id number" });
-    }
-    return res.status(400).send({ message: "Error with database - k" });
-  });
+  .catch(next);
 
 }
 
+// is this needed?
 function getUsers(req, res) {
   return User.find({})
     .then((users) => {
       if (users) {
         return res.status(200).send(users);
       }
-      return res.status(404).json({ message: "Users not found" });
+      return Promise.reject(new NotFoundError ("User not found"));
     })
-    .catch((err) => {
-      if (err.name === "CastError")
-        return res.status(400).send({ error: "invalid id number" });
-      return res.status(400).send({ message: "Error with database - k" });
-    });
+    .catch(next);
 }
 
 //is this needed?
@@ -74,15 +65,11 @@ function getOneUser(req, res) {
   return User.findById(req.params.id)
     .then((user) => {
       if (!user) {
-        return res.status(404).send({ message: "User ID not found" });
+        return Promise.reject(new NotFoundError ("User not found"));
       }
       return res.status(200).send(user);
     })
-    .catch((err) => {
-      if (err.name === "CastError")
-        return res.status(400).send({ error: "invalid id number" });
-      return res.status(500).send({ error: "system error" });
-    });
+    .catch(next);
 }
 
 //COMPLETE hash password before saving
@@ -90,11 +77,11 @@ function createUser(req, res) {
   const { name, about, avatar, email, password } = req.body;
 
   if (!email || !password){
-    return res.status(400).send({ message: "email or password invalid" });
+    return Promise.reject(new NotFoundError('email or password invalid'));
   }
   //check to see if email already exists
   return User.findOne({ email }).then((user) => {
-    if (user) return res.status(403).send({ message: "email already exists" });
+    if (user) return Promise.reject(new ForbiddenError ('Email already exists'));
 
     // hashing the password
     bcrypt
@@ -109,11 +96,7 @@ function createUser(req, res) {
         })
       )
       .then((user) => res.status(200).send(user))
-      .catch((err) => {
-        if (err.name === "CastError")
-          return res.status(400).send({ error: "invalid id number" });
-        return res.status(400).send(err);
-      });
+      .catch(next);
   });
 }
 
@@ -130,11 +113,7 @@ function updateUser(req, res) {
     )
       .then((user) => res.json({ data: user }))
       // .catch(err => res.status(500).send({message: 'uh oh' }));
-      .catch((err) => {
-        // if (err.name === 'CastError') return res.status(400).send({ error: 'invalid id number' });
-        if (err.name === "CastError") return res.status(400).send(req.body);
-        return res.status(500).send({ error: "system error" });
-      })
+      .catch(next);
   );
 }
 
@@ -149,11 +128,7 @@ function updateUserAvatar(req, res) {
     }
   )
     .then((link) => res.send({ data: link }))
-    .catch((err) => {
-      if (err.name === "CastError")
-        return res.status(400).send({ error: "invalid id number" });
-      return res.status(500).send({ message: "Error" });
-    });
+    .catch(next);
 }
 
 module.exports = {

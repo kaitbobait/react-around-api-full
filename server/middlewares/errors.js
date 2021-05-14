@@ -2,17 +2,31 @@
 // 401 when something goes wrong with authentication or authorization.
 // 404 for example, when the requested resource with a passed _id was not found.
 
-class requestError extends Error {
+class RequestError extends Error {
   constructor(message){
     super(message);
     this.statusCode = 400;
   }
 }
 
-class authError extends Error {
+class CastError extends Error {
+  constructor(message){
+    super(message);
+    this.statusCode = 400;
+  }
+}
+
+class AuthError extends Error {
   constructor(message){
     super(message);
     this.statusCode = 401;
+  }
+}
+
+class ForbiddenError extends Error {
+  constructor(message){
+    super(message);
+    this.statusCode = 403;
   }
 }
 
@@ -23,4 +37,4 @@ class NotFoundError extends Error {
   }
 }
 
-module.exports = { requestError, authError ,NotFoundError };
+module.exports = { RequestError, CastError, AuthError , ForbiddenError, NotFoundError };
