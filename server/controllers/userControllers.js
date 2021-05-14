@@ -111,9 +111,11 @@ function updateUser(req, res) {
         runValidators: true, // the data will be validated before the update
       }
     )
-      .then((user) => res.json({ data: user }))
-      // .catch(err => res.status(500).send({message: 'uh oh' }));
-      .catch(next);
+      .then((user) => {
+        if(!user) throw new NotFoundError('user Id not found');
+        return res.json({ data: user })
+      })
+      .catch(next)
   );
 }
 
