@@ -52,7 +52,7 @@ class AuthApi {
       })
   }
 
-  checkToken(token) {
+  getContent(token) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: {

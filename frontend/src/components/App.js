@@ -210,7 +210,7 @@ function App() {
     
     if (token) {
       auth
-        .checkToken(token)
+        .getContent(token)
         .then((res) => {
           //console.log(1);  //works
           //console.log(res.email); //works
@@ -221,7 +221,7 @@ function App() {
           
         })
         .then((res) => {
-          console.log(res); //returns undefined
+          console.log(res); 
          console.log(userData);
           setIsLoggedIn(true);
         })

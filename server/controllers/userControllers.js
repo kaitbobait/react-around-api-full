@@ -24,7 +24,7 @@ function login(req, res) {
       }
       
       const token = generateToken(user._id);
-      console.log('token', token);// undefined
+      console.log('token', token); //works
       //console.log(user._id); //returns id
       //assign token to a cookie
       res.cookie('token', token, {httpOnly: true});
@@ -34,6 +34,24 @@ function login(req, res) {
       res.status(401).send(err)
     });
   
+}
+
+function getCurrentUser(req, res) {
+  console.log(req.user);
+  return User.findById(req.user._id)
+  .then((user) => {
+    if(user) {
+      return res.status(200).send(user);
+    }
+    return res.status(404).json({ message: "User not found" });
+  })
+  .catch((err) => {
+    if (err.name === "CastError"){
+      return res.status(400).send({ error: "invalid id number" });
+    }
+    return res.status(400).send({ message: "Error with database - k" });
+  });
+
 }
 
 function getUsers(req, res) {
@@ -51,6 +69,7 @@ function getUsers(req, res) {
     });
 }
 
+//is this needed?
 function getOneUser(req, res) {
   return User.findById(req.params.id)
     .then((user) => {
@@ -140,6 +159,7 @@ function updateUserAvatar(req, res) {
 module.exports = {
   login,
   getUsers,
+  getCurrentUser,
   getOneUser,
   createUser,
   updateUser,
