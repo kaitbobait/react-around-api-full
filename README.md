@@ -15,3 +15,4 @@ This repository contains the full API of "Around the U.S." project that features
 //call stack: auth.js(authorize) --> app.js(handleLoginSubmit) --> bunch of random stuff that probs isn't right
 
 //URGENT when type in wrong url it leads to a blank page with footer, should default to login page if no token detected...
+//TODO check all routes and make sure authentication works. Not currenty working, but want to get things up and running first.

@@ -29,6 +29,7 @@ module.exports = (req, res, next) => {
     //console.log('dev-secret');
     payload = jwt.verify(token, JWT_SECRET);
     //payload = jwt.verify(token, "dev-secret");
+   
   } catch (err) {
     // we return an error if something goes wrong
     return res
@@ -37,8 +38,7 @@ module.exports = (req, res, next) => {
   }
 
   req.user = payload; // assigning the payload to the request object
-  console.log(payload);
-  console.log(req.user);
+
 
   next(); // sending the request to the next middleware
 };

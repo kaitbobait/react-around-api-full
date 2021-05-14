@@ -11,9 +11,12 @@ const {
 
 router.get("/users", auth, getUsers);
 
+//get current user information //COMPLETE  - works
 router.get("/users/me", auth, getCurrentUser);
+
 // update user profile
 router.patch("/users/me", auth, updateUser);
+
 // update user avatar
 router.patch("/users/me/avatar", auth, updateUserAvatar);
 
