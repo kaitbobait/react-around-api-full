@@ -6,6 +6,7 @@ require("dotenv").config();
 const { PORT = 3000 } = process.env;
 
 const helmet = require("helmet");
+const { celebrate, Joi } = require('celebrate');
 
 const userRouter = require("./routes/users");
 const cardRouter = require("./routes/cards");
