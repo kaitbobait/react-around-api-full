@@ -22,9 +22,6 @@ router.patch(
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(30),
       about: Joi.string().required().min(2).max(30),
-      avatar: Joi.string().required().url(),
-      email: Joi.string().required().unique().email(),
-      password: Joi.string().required(),
     }),
   }),
   updateUser
@@ -36,11 +33,7 @@ router.patch(
   auth,
   celebrate({
     body: Joi.object().keys({
-      name: Joi.string().required().min(2).max(30),
-      about: Joi.string().required().min(2).max(30),
       avatar: Joi.string().required().url(),
-      email: Joi.string().required().unique().email(),
-      password: Joi.string().required(),
     }),
   }),
   updateUserAvatar
