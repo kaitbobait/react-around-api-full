@@ -6,7 +6,7 @@ require("dotenv").config();
 const { PORT = 3000 } = process.env;
 
 const helmet = require("helmet");
-const { celebrate, Joi } = require('celebrate');
+const { celebrate, Joi } = require("celebrate");
 
 const userRouter = require("./routes/users");
 const cardRouter = require("./routes/cards");
@@ -32,8 +32,26 @@ app.use(express.json());
 // protects app from web vulnerabilities by setting HTTP headers
 app.use(helmet());
 
-app.post("/signin", login);
-app.post("/signup", createUser);
+app.post(
+  "/signin",
+  celebrate({
+    body: Joi.object().keys({
+      email: Joi.string().required().unique(),
+      password: Joi.string().required(),
+    }),
+  }),
+  login
+);
+app.post(
+  "/signup",
+  celebrate({
+    body: Joi.object().keys({
+      email: Joi.string().required().unique(),
+      password: Joi.string().required().min(8),
+    }),
+  }),
+  createUser
+);
 
 app.use("/", auth, userRouter);
 app.use("/", auth, cardRouter);
