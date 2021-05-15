@@ -21,7 +21,7 @@ function login(req, res, next) {
   User.findUserByCredentials(email, password)
     .then((user) => {
       if(!user) {
-        return Promise.reject(new AuthError('Authorization Error: Incorrect email or password'));
+        throw new AuthError('Authorization Error: Incorrect email or password');
       }
       
       const token = generateToken(user._id);
@@ -43,7 +43,7 @@ function getCurrentUser(req, res, next) {
     if(user) {
       return res.status(200).send(user);
     }
-    return Promise.reject(new NotFoundError ("User not found"));
+    throw new NotFoundError ("User not found");
   })
   .catch(next);
 
