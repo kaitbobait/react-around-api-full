@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middlewares/auth");
+const { celebrate, Joi } = require("celebrate");
 
 const {
   getUsers,
