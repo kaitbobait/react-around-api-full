@@ -6,14 +6,14 @@ require("dotenv").config();
 const { PORT = 3000 } = process.env;
 
 const helmet = require("helmet");
-const { celebrate, Joi } = require("celebrate");
+const { celebrate, Joi, errors } = require("celebrate");
 
 const userRouter = require("./routes/users");
 const cardRouter = require("./routes/cards");
 const auth = require("./middlewares/auth");
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { login, createUser, errors } = require("./controllers/userControllers");
+const { login, createUser } = require("./controllers/userControllers");
 const { request } = require("express");
 
 mongoose.connect("mongodb://localhost:27017/aroundb", {
