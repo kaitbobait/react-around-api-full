@@ -17,3 +17,6 @@ This repository contains the full API of "Around the U.S." project that features
 //URGENT when type in wrong url it leads to a blank page with footer, should default to login page if no token detected...
 //TODO check all routes and make sure authentication works. Not currenty working, but want to get things up and running first.
 //TODO update npm use: npm install -g npm
+
+kaitbobait.students.nomoreparties.site
+www.kaitbobait.students.nomoreparties.site

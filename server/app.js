@@ -59,6 +59,10 @@ app.post(
 
 app.use("/", auth, userRouter);
 app.use("/", auth, cardRouter);
+// connect the main application router at /api
+app.use('/api', require('../router'));
+// distribute the folder with the bundled frontend
+app.use(express.static(path.join(__dirname, 'public'))); 
 
 app.get("*", (req, res) => {
   res.status(404).send({ message: "Requested resource not found" });
