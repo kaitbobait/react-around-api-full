@@ -10,10 +10,11 @@ const {
   getCurrentUser,
 } = require("../controllers/userControllers");
 
-
+//COMPLETE  - works 5.17
 router.get("/users", getUsers);
 
-//get current user information //COMPLETE  - works
+//COMPLETE  - works 5.17
+//get current user information 
 router.get("/users/me", getCurrentUser);
 
 // update user profile
