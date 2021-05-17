@@ -14,7 +14,6 @@ const {
 router.get("/cards", getCards);
 router.post(
   "/cards",
-  auth,
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(30),
@@ -25,12 +24,12 @@ router.post(
 );
 
 //QUESTION do I need to add params or headers here?
-router.delete("/cards/:cardId", auth, deleteCard);
+router.delete("/cards/:cardId", deleteCard);
 
 // like a card
-router.put("/cards/:cardId/likes", auth, addLike);
+router.put("/cards/:cardId/likes", addLike);
 
 // delete user like from card
-router.delete("/cards/:cardId/likes", auth, deleteLike);
+router.delete("/cards/:cardId/likes", deleteLike);
 
 module.exports = router;

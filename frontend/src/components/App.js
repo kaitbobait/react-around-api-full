@@ -289,17 +289,17 @@ function App() {
         console.log(data); //token object
         //return data;
       })
-      // .then((res) => {
-      //   console.log('get cards plz');
-      //     api
-      //       .getInitialCards()
-      //       .then((res) => {
-      //         setCards(res);
-      //       })
-      //       .catch((err) => {
-      //         console.log(err);
-      //       });
-      //   })
+      .then(() => {
+        console.log('get cards plz');
+          api
+            .getInitialCards()
+            .then((res) => {
+              setCards(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
       .then(() => history.push("/main"))
       .then(resetForm)
       .catch((err) => {

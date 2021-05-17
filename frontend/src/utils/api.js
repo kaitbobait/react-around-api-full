@@ -120,9 +120,9 @@ class Api {
     });
   }
 }
-
+//URGENT change base url back to https://api.kaitbobait.students.nomoreparties.site
 const api = new Api({
-  baseUrl: "https://api.kaitbobait.students.nomoreparties.site",
+  baseUrl: "http://localhost:3000/",
   headers: {
     //TODO change hard coded token
     authorization: `Bearer ${localStorage.getItem("token")}`,

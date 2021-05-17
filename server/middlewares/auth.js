@@ -8,12 +8,11 @@ const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError } = r
 //        next();
 // if something is wrong - return 401 error
 
-console.log('um hello?');
+console.log('auth: um hello?');
 
 //URGENT not receiving token from header
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log('check check');
   // checks to see if there is an authorization header and starts with 'bearer'
   if (!authorization || !authorization.startsWith("Bearer ")) {
     return res
@@ -22,7 +21,6 @@ module.exports = (req, res, next) => {
   }
   // getting the token as a string
   const token = authorization.replace("Bearer ", "");
-  console.log(token);
   let payload;
 
   try {
@@ -38,7 +36,6 @@ module.exports = (req, res, next) => {
     // we return an error if something goes wrong
     throw new AuthError("Authorization required - payload not verified");
   }
-  next();
 
   req.user = payload; // assigning the payload to the request object
 
