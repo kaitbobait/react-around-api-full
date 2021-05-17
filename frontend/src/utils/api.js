@@ -121,8 +121,9 @@ class Api {
   }
 }
 //URGENT change base url back to https://api.kaitbobait.students.nomoreparties.site
+//local "http://localhost:3000/",
 const api = new Api({
-  baseUrl: "http://localhost:3000/",
+  baseUrl: "https://api.kaitbobait.students.nomoreparties.site",
   headers: {
     //TODO change hard coded token
     authorization: `Bearer ${localStorage.getItem("token")}`,
