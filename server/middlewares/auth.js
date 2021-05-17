@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
+const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError } = require('../middlewares/errors');
 //create middleware for authorization
 //should verify token from the headers
 //If everything's fine with the token, the middleware should add the payload token to the request object and call next():
@@ -7,10 +8,12 @@ const { JWT_SECRET } = process.env;
 //        next();
 // if something is wrong - return 401 error
 
+console.log('um hello?');
+
 //URGENT not receiving token from header
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-
+  console.log('check check');
   // checks to see if there is an authorization header and starts with 'bearer'
   if (!authorization || !authorization.startsWith("Bearer ")) {
     return res
@@ -33,10 +36,9 @@ module.exports = (req, res, next) => {
    
   } catch (err) {
     // we return an error if something goes wrong
-    return res
-      .status(401)
-      .send({ message: "Authorization required - payload not verified" });
+    throw new AuthError("Authorization required - payload not verified");
   }
+  next();
 
   req.user = payload; // assigning the payload to the request object
 

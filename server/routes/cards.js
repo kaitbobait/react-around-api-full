@@ -11,7 +11,7 @@ const {
   deleteLike,
 } = require("../controllers/cardsControllers");
 
-router.get("/cards", auth, getCards);
+router.get("/cards", getCards);
 router.post(
   "/cards",
   auth,
