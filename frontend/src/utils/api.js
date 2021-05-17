@@ -122,7 +122,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "http://localhost:3000",
+  baseUrl: "https://api.kaitbobait.students.nomoreparties.site/",
   headers: {
     //TODO change hard coded token
     authorization: `Bearer ${localStorage.getItem("token")}`,

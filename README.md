@@ -20,3 +20,6 @@ This repository contains the full API of "Around the U.S." project that features
 
 kaitbobait.students.nomoreparties.site
 www.kaitbobait.students.nomoreparties.site
+
+api.kaitbobait.students.nomoreparties.site
+www.api.kaitbobait.students.nomoreparties.site
