@@ -12,10 +12,10 @@ function getCards(req, res, next) {
     .catch(next);
 }
 
-// returns error 400, ownerId is undefined
+// COMPLETE 4.17 WORKS
 function createCard(req, res, next) {
   const { name, link } = req.body;
-  return Cards.create({ name, link, owner: req.user._id })
+  return Cards.create({ name, link, owner: req.user.id })
     .then((card) => {
       if(!card) {
         throw new RequestError('Invalid data');

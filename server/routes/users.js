@@ -10,6 +10,7 @@ const {
   getCurrentUser,
 } = require("../controllers/userControllers");
 
+
 router.get("/users", getUsers);
 
 //get current user information //COMPLETE  - works

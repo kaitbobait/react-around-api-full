@@ -11,6 +11,7 @@ const {
   deleteLike,
 } = require("../controllers/cardsControllers");
 
+// COMPLETE 5.17 WORKS
 router.get("/cards", getCards);
 router.post(
   "/cards",
