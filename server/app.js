@@ -35,6 +35,7 @@ app.use(express.json());
 // protects app from web vulnerabilities by setting HTTP headers
 app.use(helmet());
 app.use(cors());
+app.options('*', cors())
 //enabling the winston request logger
 app.use(requestLogger);
 
