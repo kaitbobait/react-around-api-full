@@ -19,6 +19,7 @@ module.exports = (req, res, next) => {
   }
   // getting the token as a string
   const token = authorization.replace("Bearer ", "");
+  console.log(token);
   let payload;
 
   try {
