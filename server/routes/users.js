@@ -31,7 +31,7 @@ router.patch(
 
 // update user avatar
 router.patch(
-  "http://localhost:3000/",
+  "users/me/avatar",
   celebrate({
     body: Joi.object().keys({
       avatar: Joi.string().required(),
