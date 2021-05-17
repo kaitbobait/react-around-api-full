@@ -26,11 +26,8 @@ module.exports = (req, res, next) => {
   try {
     // trying to verify the token
     // if valid, verify() returns the decoded payload
-    //QUESTION how do we link the 'dev-secret' key? doesn't really matter what it's called, but how do we put the key inside of string?
-    //console.log(JWT_TOKEN);
-    //console.log('dev-secret');
+    //NOTE jwt.verify() makes ._id into id
     payload = jwt.verify(token, JWT_SECRET);
-    //payload = jwt.verify(token, "dev-secret");
    
   } catch (err) {
     // we return an error if something goes wrong
@@ -38,6 +35,8 @@ module.exports = (req, res, next) => {
   }
 
   req.user = payload; // assigning the payload to the request object
+  console.log('req.user:', req.user);
+  console.log('payload:', payload);
 
 
   next(); // sending the request to the next middleware

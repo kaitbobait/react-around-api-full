@@ -15,6 +15,7 @@ function getCards(req, res, next) {
 // COMPLETE 4.17 WORKS
 function createCard(req, res, next) {
   const { name, link } = req.body;
+  console.log('req.user.id:', req.user);
   return Cards.create({ name, link, owner: req.user.id })
     .then((card) => {
       if(!card) {

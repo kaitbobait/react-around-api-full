@@ -13,6 +13,8 @@ const {
 
 // COMPLETE 5.17 WORKS
 router.get("/cards", getCards);
+
+// COMPLETE 5.17 works
 router.post(
   "/cards",
   celebrate({
@@ -25,11 +27,14 @@ router.post(
 );
 
 //QUESTION do I need to add params or headers here?
+// COMPLETE 5.17 works
 router.delete("/cards/:cardId", deleteCard);
 
+// COMPLETE 5.17 works
 // like a card
 router.put("/cards/:cardId/likes", addLike);
 
+// COMPLETE 5.17 works
 // delete user like from card
 router.delete("/cards/:cardId/likes", deleteLike);
 
