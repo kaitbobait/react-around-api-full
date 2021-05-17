@@ -15,6 +15,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { login, createUser } = require("./controllers/userControllers");
 const { request } = require("express");
+const cors = require('cors')
 
 mongoose.connect("mongodb://localhost:27017/aroundb", {
   useNewUrlParser: true,
@@ -33,6 +34,7 @@ app.use(express.json());
 
 // protects app from web vulnerabilities by setting HTTP headers
 app.use(helmet());
+app.use(cors());
 //enabling the winston request logger
 app.use(requestLogger);
 
