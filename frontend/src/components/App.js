@@ -32,31 +32,31 @@ function App() {
   // when mounted, userInfo will be updated with value
   const [currentUser, setCurrentUser] = React.useState({});
 
-  React.useEffect(() => {
-    api.getUserInfo()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // React.useEffect(() => {
+  //   api.getUserInfo()
+  //     .then((data) => {
+  //       setCurrentUser(data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   /* Card info */
 
   const [cards, setCards] = React.useState([]);
 
   // request initial cards api, then change cards state to new value
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // React.useEffect(() => {
+  //   api
+  //     .getInitialCards()
+  //     .then((res) => {
+  //       setCards(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   function handleCardLike(card) {
     // Check one more time if this card was already liked
@@ -207,7 +207,6 @@ function App() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    
     if (token) {
       auth
         .getContent(token)
@@ -218,22 +217,33 @@ function App() {
             ...userData,
             email: res.email,
           });
-          
         })
         .then((res) => {
-          console.log(res); 
-         console.log(userData);
+          console.log('hello');
+          console.log('hellllooo???');
           setIsLoggedIn(true);
         })
         .then((res) => {
-          history.push('/main');
+          console.log('hit main page');
+          history.push("/main");
         })
+        //NOTE just added....experiment doesn't seem to get here
+        // .then((res) => {
+        //   console.log('get cards plz');
+        //   api
+        //     .getInitialCards()
+        //     .then((res) => {
+        //       setCards(res);
+        //     })
+        //     .catch((err) => {
+        //       console.log(err);
+        //     });
+        // })
         .catch((err) => {
           console.log(err);
-        })
+        });
     }
   }, [isLoggedIn]);
-
 
   function handleEmailChange(evt) {
     setEmail(evt.target.value);
@@ -257,7 +267,7 @@ function App() {
     evt.preventDefault();
 
     if (!email || !password) {
-      console.log('email or password not working')
+      console.log("email or password not working");
       return;
     }
 
@@ -276,9 +286,22 @@ function App() {
           // changes isLoggedIn to true
           handleLogin();
         }
+        console.log(data); //token object
+        //return data;
       })
-      .then(resetForm)
+      // .then((res) => {
+      //   console.log('get cards plz');
+      //     api
+      //       .getInitialCards()
+      //       .then((res) => {
+      //         setCards(res);
+      //       })
+      //       .catch((err) => {
+      //         console.log(err);
+      //       });
+      //   })
       .then(() => history.push("/main"))
+      .then(resetForm)
       .catch((err) => {
         handleFail();
         handleLoginModal();
@@ -289,33 +312,31 @@ function App() {
   // Register page
 
   const handleRegisterSubmit = (evt) => {
-
     evt.preventDefault();
     //does not have backend api setup, so anything passes and will result in
     //success modal -- incorrect -- fix when connect backend
-    auth.register(email, password)
-    .then((res) =>{
-      handleLoginModal();
-      handleSuccess();
-    })
-    .then(resetForm)
+    auth
+      .register(email, password)
+      .then((res) => {
+        handleLoginModal();
+        handleSuccess();
+      })
+      .then(resetForm)
       // .then(() => {
       //   history.push('/login')
       // })
-    .catch((err) => {
-      console.log(err);
-      handleFail();
-      handleLoginModal();
-      
-    })
-  }
+      .catch((err) => {
+        console.log(err);
+        handleFail();
+        handleLoginModal();
+      });
+  };
 
   function logOut() {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     history.push("/login");
   }
-
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -371,7 +392,12 @@ function App() {
             </Route>
           </Switch>
           <Footer />
-          <InfoTooltip isOpen={isLoginModalOpen} onClose={closeAllPopups} isSuccess={isSuccess} isFail={isFail}></InfoTooltip>
+          <InfoTooltip
+            isOpen={isLoginModalOpen}
+            onClose={closeAllPopups}
+            isSuccess={isSuccess}
+            isFail={isFail}
+          ></InfoTooltip>
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
@@ -402,7 +428,6 @@ function App() {
             isOpen={selectedCard}
             onClose={closeAllPopups}
           />
-
         </div>
       </div>
     </CurrentUserContext.Provider>

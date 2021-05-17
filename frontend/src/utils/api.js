@@ -30,16 +30,16 @@ class Api {
   }
 
   // GETs information for the user profile
-  getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
-      headers: {
-        authorization: this._authorize,
-      },
-    }).then((res) => {
-      return this._checkResponse(res);
-    });
-  }
+  // getUserInfo() {
+  //   return fetch(`${this._baseUrl}/users/me`, {
+  //     method: "GET",
+  //     headers: {
+  //       authorization: this._authorize,
+  //     },
+  //   }).then((res) => {
+  //     return this._checkResponse(res);
+  //   });
+  // }
 
   // modified the profile text content
   editProfile(values) {
@@ -122,7 +122,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "https://api.kaitbobait.students.nomoreparties.site/",
+  baseUrl: "https://api.kaitbobait.students.nomoreparties.site",
   headers: {
     //TODO change hard coded token
     authorization: `Bearer ${localStorage.getItem("token")}`,

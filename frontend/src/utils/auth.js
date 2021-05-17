@@ -70,7 +70,7 @@ class AuthApi {
 
 const auth = new AuthApi({
   //"https://register.nomoreparties.co" // old url
-  baseUrl: "https://api.kaitbobait.students.nomoreparties.site/",
+  baseUrl: "https://api.kaitbobait.students.nomoreparties.site",
   headers: {
     "Content-Type": "application/json",
   },
