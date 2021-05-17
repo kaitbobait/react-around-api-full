@@ -29,7 +29,7 @@ function login(req, res, next) {
       //console.log(user._id); //returns id
       //assign token to a cookie
       res.cookie('token', token, {httpOnly: true});
-      res.send(token);
+      res.send({token});
     })
     .catch(next);
   
