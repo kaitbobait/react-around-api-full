@@ -120,13 +120,17 @@ class Api {
     });
   }
 }
+
+const token = localStorage.getItem("token");
+
 //URGENT change base url back to https://api.kaitbobait.students.nomoreparties.site
 //local "http://localhost:3000/",
 const api = new Api({
-  baseUrl: "https://api.kaitbobait.students.nomoreparties.site",
+  baseUrl: "http://localhost:3000/",
   headers: {
     //TODO change hard coded token
-    authorization: `Bearer ${localStorage.getItem("token")}`,
+    //authorization: `Bearer ${localStorage.getItem("token")}`,
+    authorization: `Bearer ${token}`,
     "Content-Type": "application/json",
   },
 });

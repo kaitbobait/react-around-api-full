@@ -20,12 +20,13 @@ function login(req, res, next) {
   //checks if email already exists
   User.findUserByCredentials(email, password)
     .then((user) => {
+      console.log('user:', user);
       if(!user) {
         throw new AuthError('Authorization Error: Incorrect email or password');
       }
       
       const token = generateToken(user._id);
-      console.log('token', token); //works
+      //console.log('token', token); //works
       //console.log(user._id); //returns id
       //assign token to a cookie
       res.cookie('token', token, {httpOnly: true});
