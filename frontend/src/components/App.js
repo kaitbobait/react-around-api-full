@@ -118,7 +118,7 @@ function App() {
     api
       .editProfile(newInfo)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
         closeAllPopups();
       })
       .catch((err) => {
@@ -130,7 +130,7 @@ function App() {
     api
       .editAvatar(newInfo)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
         closeAllPopups();
       })
       .catch((err) => {
@@ -204,30 +204,28 @@ function App() {
   const [message, setMessage] = React.useState("");
   const [userData, setUserData] = React.useState({});
 
-  
   React.useEffect(() => {
-    console.log('use effect in App.js');
+    console.log("use effect in App.js");
     const token = localStorage.getItem("token");
-    console.log('token:', token);
+    console.log("token:", token);
     if (token) {
-      console.log('token use effect:', token);
+      console.log("token use effect:", token);
       auth
         .getContent(token)
         .then((res) => {
-          //console.log(1);  //works
-          //console.log(res.email); //works
           setUserData({
             ...userData,
             email: res.email,
           });
-        })
+            setCurrentUser(res);
+          })
         .then((res) => {
-          console.log('hello');
-          console.log('hellllooo???');
+          console.log("hello");
+          console.log("hellllooo???");
           setIsLoggedIn(true);
         })
         .then((res) => {
-          console.log('hit main page');
+          console.log("hit main page");
           history.push("/main");
         })
         //NOTE just added....experiment doesn't seem to get here
@@ -243,7 +241,7 @@ function App() {
         //     });
         // })
         .catch((err) => {
-          console.log('use effect error');
+          console.log("use effect error");
           console.log(err);
         });
     }
@@ -294,16 +292,16 @@ function App() {
         //return data;
       })
       .then(() => {
-        console.log('get cards plz');
-          api
-            .getInitialCards()
-            .then((res) => {
-              setCards(res);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        })
+        console.log("get cards plz");
+        api
+          .getInitialCards()
+          .then((res) => {
+            setCards(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
       .then(() => history.push("/main"))
       .then(resetForm)
       .catch((err) => {

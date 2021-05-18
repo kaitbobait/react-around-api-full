@@ -64,14 +64,14 @@ class AuthApi {
       .then((res) => {
         return this._checkResponse(res);
       })
-      .then(({ data }) => data);
+      .then((data) => data);
   }
 }
 
 const auth = new AuthApi({
   //URGENT change base url back to https://api.kaitbobait.students.nomoreparties.site
   //local: http://localhost:3000/
-  baseUrl: "http://localhost:3000/",
+  baseUrl: "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
   },

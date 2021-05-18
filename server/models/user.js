@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
   // username, string from 2 to 30 characters, required field
@@ -19,49 +19,56 @@ const userSchema = new mongoose.Schema({
   // link to the avatar, string, required field
   avatar: {
     type: String,
-    default: 'https://pictures.s3.yandex.net/resources/avatar_1604080799.jpg',
+    default: "https://pictures.s3.yandex.net/resources/avatar_1604080799.jpg",
     validate: {
       // regex: /https?:\/\/[www.]?[-a-z0-9]{2,24}[/-a-z0-9_.#@]+/i
       validator(v) {
         const regex = /^https?:\/\/(www\.)?\S+/gi;
         return regex.test(v);
       },
-      message: 'Please enter valid url',
+      message: "Please enter valid url",
     },
   },
-  email:{
+  email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
     required: true,
-    minlength: 8, 
-    select: false //hash won't be returned from database by default
-  }
+    minlength: 8,
+    select: false, //hash won't be returned from database by default
+  },
 });
 
-userSchema.statics.findUserByCredentials = function findUserByCredentials (email, password) {
+userSchema.statics.findUserByCredentials = function findUserByCredentials(
+  email,
+  password
+) {
   // trying to find the user by email use "this" or "User"?
-  return this.findOne({ email }).select('+password') // this — the User model
+  return this.findOne({ email })
+    .select("+password") // this — the User model
     .then((user) => {
+      console.log("user credentials:", user);
       // not found - rejecting the promise
       if (!user) {
-        return Promise.reject(new Error('Incorrect email or password'));
+        return Promise.reject(new Error("Incorrect email or password"));
       }
-
-      // found - comparing hashes
-      return bcrypt.compare(password, user.password)
-      .then((matched) => {
-        if(!matched) { // reject promise
-        return Promise.reject(new Error('Incorrect email or password'))
+      console.log(password);
+      console.log(user.password);
+      // found - comparing typed password to hashed password
+      //NOTE returning unmatched
+      return bcrypt.compare(password, user.password).then((matched) => {
+        console.log("matched:", matched);
+        if (!matched) {
+          // reject promise
+          return Promise.reject(new Error("Incorrect email or password"));
         }
 
-        return user; 
-      })
-    })
-    
+        return user;
+      });
+    });
 };
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model("user", userSchema);

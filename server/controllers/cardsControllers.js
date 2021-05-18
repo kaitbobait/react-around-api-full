@@ -1,25 +1,32 @@
 const Cards = require("../models/cards");
-const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError } = require('../middlewares/errors');
+const {
+  RequestError,
+  CastError,
+  AuthError,
+  ForbiddenError,
+  NotFoundError,
+} = require("../middlewares/errors");
 //TODO add throw errors
 
+//COMPLETE 5.17 works
 function getCards(req, res, next) {
-  console.log('step 1');
+  console.log("step 1");
   return Cards.find({})
     .then((cards) => {
-      console.log('step 2');
+      console.log("step 2");
       res.status(200).send(cards);
     })
     .catch(next);
 }
 
-// COMPLETE 4.17 WORKS
+// COMPLETE 5.17 WORKS
 function createCard(req, res, next) {
   const { name, link } = req.body;
-  console.log('req.user.id:', req.user);
-  return Cards.create({ name, link, owner: req.user.id })
+  console.log("req.user._id:", req.user);
+  return Cards.create({ name, link, owner: req.user._id })
     .then((card) => {
-      if(!card) {
-        throw new RequestError('Invalid data');
+      if (!card) {
+        throw new RequestError("Invalid data");
       }
       res.status(200).send(card);
     })
@@ -33,7 +40,7 @@ function deleteCard(req, res, next) {
       if (user) {
         res.send({ data: user });
       } else {
-        throw new NotFoundError('Card not found with ID');
+        throw new NotFoundError("Card not found with ID");
       }
     })
     .catch(next);
@@ -50,7 +57,7 @@ function addLike(req, res, next) {
       if (likes) {
         res.send({ data: likes });
       } else {
-        throw new NotFoundError('Card not found with Id');
+        throw new NotFoundError("Card not found with Id");
       }
     })
     .catch(next);
@@ -67,7 +74,7 @@ function deleteLike(req, res, next) {
       if (likes) {
         res.send({ data: likes });
       } else {
-        throw new NotFoundError('Card not found with Id');
+        throw new NotFoundError("Card not found with Id");
       }
     })
     .catch(next);

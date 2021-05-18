@@ -8,7 +8,7 @@ function Card(props) {
 
 
   // Checking if you are the owner of the current card
-  const isOwn =  props.card.owner._id === currentUser._id;
+  const isOwn =  props.card.owner === currentUser._id;
   // Creating a variable which you'll then set in 'className' for the delete button
   //not working, tried to add both so it wouldn't be just an empty button
   const cardDeleteButtonClassName = (`${isOwn ? 'places__delete-button_visible' : 'places__delete-button_visible places__delete-button_hidden'}`);

@@ -38,7 +38,7 @@ function login(req, res, next) {
 
 function getCurrentUser(req, res, next) {
   console.log('user', req.user);
-  return User.findById(req.user.id)
+  return User.findById(req.user._id)
   .then((user) => {
     //console.log(user);
     if(user) {

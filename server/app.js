@@ -76,7 +76,7 @@ app.use(errors());
 //add server error if unexpected error occurs
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
-
+  console.log('error log:', err);
   res.status(500).send({
     message:
       statusCode === 500 ? "An error occurred on the server" : err.message,
