@@ -126,7 +126,7 @@ const token = localStorage.getItem("token");
 //URGENT change base url back to https://api.kaitbobait.students.nomoreparties.site
 //local "http://localhost:3000/",
 const api = new Api({
-  baseUrl: "http://localhost:3000",
+  baseUrl: process.env.NODE_ENV === 'production' ? "https://api.kaitbobait.students.nomoreparties.site" : "http://localhost:3000",
   headers: {
     //TODO change hard coded token
     //authorization: `Bearer ${localStorage.getItem("token")}`,
