@@ -50,7 +50,7 @@ function deleteCard(req, res, next) {
 function addLike(req, res, next) {
   return Cards.findByIdAndUpdate(
     req.params.cardId,
-    { $addToSet: { likes: req.user._id } }, // add _id to the array if it's not there yet
+    { $addToSet: { likes: req.user.id } }, // add _id to the array if it's not there yet
     { new: true }
   )
     .then((likes) => {
