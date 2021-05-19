@@ -57,7 +57,7 @@ function addLike(req, res, next) {
   )
     .then((likes) => {
       if (likes) {
-        res.send({ data: likes });
+        res.send(likes );
       } else {
         throw new NotFoundError("Card not found with Id");
       }
@@ -76,7 +76,8 @@ function deleteLike(req, res, next) {
   )
     .then((likes) => {
       if (likes) {
-        res.send({ data: likes });
+        //res.send({ data: likes });
+        res.send(likes);
       } else {
         throw new NotFoundError("Card not found with Id");
       }
