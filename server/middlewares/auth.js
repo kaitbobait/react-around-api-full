@@ -28,6 +28,7 @@ module.exports = (req, res, next) => {
     // if valid, verify() returns the decoded payload
     //NOTE jwt.verify() makes ._id into id
     console.log('before verify:', req.headers);
+    console.log('JWT KEY:', JWT_SECRET);
     payload = jwt.verify(token, JWT_SECRET);
     console.log('after verify:', req.headers);
   
