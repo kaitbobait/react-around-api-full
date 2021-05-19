@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const { PORT = 3000 } = process.env;
+const PORT = process.env.NODE_ENV === 'production' ? "https://api.kaitbobait.students.nomoreparties.site" : "http://localhost:3000"
 
 const helmet = require("helmet");
 const { celebrate, Joi, errors } = require("celebrate");
