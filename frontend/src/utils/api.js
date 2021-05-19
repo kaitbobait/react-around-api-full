@@ -97,7 +97,7 @@ class Api {
       callMethod = "DELETE";
     }
 
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: callMethod,
       headers: {
         authorization: this._authorize,
