@@ -27,8 +27,10 @@ module.exports = (req, res, next) => {
     // trying to verify the token
     // if valid, verify() returns the decoded payload
     //NOTE jwt.verify() makes ._id into id
+    console.log('before verify:', req.headers);
     payload = jwt.verify(token, JWT_SECRET);
-   
+    console.log('after verify:', req.headers);
+  
   } catch (err) {
     // we return an error if something goes wrong
     throw new AuthError("Authorization required - payload not verified");
