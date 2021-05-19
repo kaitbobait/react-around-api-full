@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 require("dotenv").config();
-
-const PORT = process.env.NODE_ENV === 'production' ? "https://api.kaitbobait.students.nomoreparties.site" : "http://localhost:3000"
+const {PORT = 3000} = process.env;
+// const PORT = process.env.NODE_ENV === 'production' ? "https://api.kaitbobait.students.nomoreparties.site" : "http://localhost:3000"
 
 const helmet = require("helmet");
 const { celebrate, Joi, errors } = require("celebrate");
@@ -83,10 +83,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-// app.listen(PORT, () => {
-//   // if everything works fine, the console will show which port the application is listening to
-//   console.log(`App listening at port ${PORT}, k byeBYE!`);
-//   console.log('Port is:', PORT);
-// });
+app.listen(PORT, () => {
+  // if everything works fine, the console will show which port the application is listening to
+  console.log(`App listening at port ${PORT}, k byeBYE!`);
+  console.log('Port is:', PORT);
+});
 
-app.listen('https://kaitbobait.students.nomoreparties.site');
+//app.listen('https://kaitbobait.students.nomoreparties.site');
