@@ -26,11 +26,8 @@ module.exports = (req, res, next) => {
   try {
     // trying to verify the token
     // if valid, verify() returns the decoded payload
-    //NOTE jwt.verify() makes ._id into id
-    console.log('before verify:', req.headers);
-    console.log('JWT KEY:', JWT_SECRET);
+    // returns jwt signature with {_id: id of user, iat, and exp:}
     payload = jwt.verify(token, JWT_SECRET);
-    console.log('after verify:', req.headers);
   
   } catch (err) {
     // we return an error if something goes wrong
