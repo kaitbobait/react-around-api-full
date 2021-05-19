@@ -30,7 +30,7 @@ function Login(props) {
             <input
               className="popup__input signIn-page__input"
               placeholder="Password"
-              type="text"
+              type="password"
               value={props.password}
               onChange={props.onPasswordChange}
             ></input>
