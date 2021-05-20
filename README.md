@@ -7,19 +7,8 @@ This repository contains the full API of "Around the U.S." project that features
 - a link to repository with the complete React application which uses this API;
 - a link to the website that hosts your API.
 
-//URGENT problem with logging in. Won't work, get error
-// failed to load resource: 404 not found
-//cannot POST /signin
-// password "abc" should it be posting 'abc' in the network? would it be hashed?
-//secret token key may not be working
-//call stack: auth.js(authorize) --> app.js(handleLoginSubmit) --> bunch of random stuff that probs isn't right
-
-//URGENT when type in wrong url it leads to a blank page with footer, should default to login page if no token detected...
-//TODO check all routes and make sure authentication works. Not currenty working, but want to get things up and running first.
-//TODO update npm use: npm install -g npm
-
-kaitbobait.students.nomoreparties.site
+* Link to my website *
 www.kaitbobait.students.nomoreparties.site
 
-api.kaitbobait.students.nomoreparties.site
-www.api.kaitbobait.students.nomoreparties.site
+* Link to my repository with the complete React application which uses this API *
+https://github.com/kaitbobait/react-around-api-full 
