@@ -28,14 +28,35 @@ router.post(
 
 //QUESTION do I need to add params or headers here?
 // COMPLETE 5.17 works
-router.delete("/cards/:cardId", deleteCard);
+router.delete("/cards/:cardId", 
+  celebrate({
+    params: Joi.object().keys({
+      cardId: Joi.string().alphanum().length(24)
+    })
+  }), 
+  deleteCard
+);
 
 // COMPLETE 5.17 works
 // like a card
-router.put("/cards/:cardId/likes", addLike);
+router.put("/cards/:cardId/likes", 
+  celebrate({
+    params: Joi.object().keys({
+      cardId: Joi.string().alphanum().length(24)
+    })
+  }),
+  addLike
+);
 
 // COMPLETE 5.17 works
 // delete user like from card
-router.delete("/cards/:cardId/likes", deleteLike);
+router.delete("/cards/:cardId/likes", 
+celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().alphanum().length(24)
+  })
+}),
+deleteLike
+);
 
 module.exports = router;
