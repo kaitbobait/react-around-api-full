@@ -97,7 +97,10 @@ function createUser(req, res, next) {
           password: hash,
         })
       )
-      .then((user) => res.status(200).send(user))
+      .then((user) => res.status(200).send({
+        email: user.email,
+        _id: user._id 
+      }))
       .catch(next);
   });
 }
