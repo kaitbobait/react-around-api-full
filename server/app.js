@@ -12,6 +12,7 @@ const userRouter = require("./routes/users");
 const cardRouter = require("./routes/cards");
 const auth = require("./middlewares/auth");
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError } = require('../middlewares/errors');
 
 const { login, createUser } = require("./controllers/userControllers");
 const { request } = require("express");
@@ -64,7 +65,7 @@ app.use("/", auth, userRouter);
 app.use("/", auth, cardRouter);
 
 app.get("*", (req, res) => {
-  res.status(404).send({ message: "Requested resource not found" });
+  throw new NotFoundError("Requested resource not found" );
 });
 
 // enable winston error logger
