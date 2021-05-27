@@ -269,8 +269,9 @@ function App() {
 
     evt.preventDefault();
 
+    // if email or password field is left blank
     if (!email || !password) {
-      console.log("email or password not working");
+      console.log("email or password left blank");
       return;
     }
 
@@ -282,7 +283,7 @@ function App() {
           //sets modal to true(to open it up)
           handleLoginModal();
           handleFail();
-          //console.log(isFail);
+          //console.log('data fail');
           throw new Error("user does not exist");
         }
         if (data.token) {

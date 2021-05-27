@@ -14,9 +14,7 @@ module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   // checks to see if there is an authorization header and starts with 'bearer'
   if (!authorization || !authorization.startsWith("Bearer ")) {
-    return res
-      .status(401)
-      .send({ message: "Authorization required - no bearer" });
+    throw new AuthError("Authorization required - no bearer");
   }
   // getting the token as a string
   const token = authorization.replace("Bearer ", "");
