@@ -46,17 +46,6 @@ function App() {
 
   const [cards, setCards] = React.useState([]);
 
-  // request initial cards api, then change cards state to new value
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   function handleCardLike(card) {
     // Check one more time if this card was already liked
@@ -203,6 +192,18 @@ function App() {
   const [password, setPassword] = React.useState("");
   const [message, setMessage] = React.useState("");
   const [userData, setUserData] = React.useState({});
+
+   // request initial cards api, then change cards state to new value
+   React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [isLoggedIn]);
 
   React.useEffect(() => {
     console.log("use effect in App.js");

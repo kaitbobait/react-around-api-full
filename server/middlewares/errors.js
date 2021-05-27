@@ -38,4 +38,11 @@ class NotFoundError extends Error {
   }
 }
 
-module.exports = { RequestError, CastError, AuthError , ForbiddenError, NotFoundError };
+class ConflictError extends Error {
+  constructor(message) {
+    super(message);
+    this.statusCode = 409;
+  }
+}
+
+module.exports = { RequestError, CastError, AuthError , ForbiddenError, NotFoundError,ConflictError };

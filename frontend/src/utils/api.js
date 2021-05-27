@@ -11,6 +11,7 @@ class Api {
 
   _checkResponse(res) {
     if (res.ok) {
+      console.log('res from check response', res);
       return res.json();
     } else {
       // if server returns an error, reject the promise
@@ -25,6 +26,7 @@ class Api {
         authorization: this._authorize,
       },
     }).then((res) => {
+      console.log('res from getInitialCards api', res);
       return this._checkResponse(res);
     });
   }

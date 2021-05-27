@@ -10,7 +10,6 @@ const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError } = r
 
 console.log('auth: um hello?');
 
-//URGENT not receiving token from header
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   // checks to see if there is an authorization header and starts with 'bearer'

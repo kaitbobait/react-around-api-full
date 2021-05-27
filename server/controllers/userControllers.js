@@ -2,7 +2,7 @@ const User = require("../models/user");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { generateToken } = require('../utils/jwt');
-const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError } = require('../middlewares/errors');
+const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError, ConflictError } = require('../middlewares/errors');
 
 //TODO
 /**
@@ -83,7 +83,11 @@ function createUser(req, res, next) {
   }
   //check to see if email already exists
   return User.findOne({ email }).then((user) => {
-    if (user) return Promise.reject(new ForbiddenError ('Email already exists'));
+    if (user) {
+      //TODO if email already exists return a 409 conflict error?
+      return Promise.reject(new ConflictError ('Email already exists'))
+
+    };
 
     // hashing the password
     bcrypt
