@@ -9,7 +9,7 @@ class AuthApi {
       return res.json();
     }
     // if server returns an error, reject the promise
-    return Promise.reject(`Error: ${res.status}`);
+    return Promise.reject(`Error: ${res.statusText}: ${res.status}`);
   }
 
   register(email, password) {
