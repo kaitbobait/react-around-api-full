@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError } = require('../middlewares/errors');
 
 const userSchema = new mongoose.Schema({
   // username, string from 2 to 30 characters, required field
@@ -53,17 +54,14 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(
       console.log("user credentials:", user);
       // not found - rejecting the promise
       if (!user) {
-        return Promise.reject(new Error("Incorrect email or password"));
+        throw new AuthError('Incorrect email or password');
       }
-      console.log(password);
-      console.log(user.password);
-      // found - comparing typed password to hashed password
-      //NOTE returning unmatched
+      
       return bcrypt.compare(password, user.password).then((matched) => {
         console.log("matched:", matched);
         if (!matched) {
           // reject promise
-          return Promise.reject(new Error("Incorrect email or password"));
+          throw new AuthError('Incorrect email or password');
         }
 
         return user;

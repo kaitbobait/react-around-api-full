@@ -12,7 +12,7 @@ const userRouter = require("./routes/users");
 const cardRouter = require("./routes/cards");
 const auth = require("./middlewares/auth");
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError } = require('../middlewares/errors');
+const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError } = require('./middlewares/errors');
 
 const { login, createUser } = require("./controllers/userControllers");
 const { request } = require("express");
@@ -40,14 +40,19 @@ app.options('*', cors())
 //enabling the winston request logger
 app.use(requestLogger);
 
+// app.post(
+//   "/signin",
+//   celebrate({
+//     body: Joi.object().keys({
+//       email: Joi.string().required().email(),
+//       password: Joi.string().required(),
+//     }),
+//   }),
+//   login
+// );
+
 app.post(
   "/signin",
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().email(),
-      password: Joi.string().required(),
-    }),
-  }),
   login
 );
 app.post(

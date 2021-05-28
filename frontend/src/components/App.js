@@ -194,16 +194,17 @@ function App() {
   const [userData, setUserData] = React.useState({});
 
    // request initial cards api, then change cards state to new value
-   React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [isLoggedIn]);
+  //  React.useEffect(() => {
+  //   api
+  //     .getInitialCards()
+  //     .then((res) => {
+  //       setCards(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       console.log('isLoggedIn?', isLoggedIn);
+  //     });
+  // }, [isLoggedIn]);
 
   React.useEffect(() => {
     console.log("use effect in App.js");
@@ -242,8 +243,16 @@ function App() {
         //     });
         // })
         .catch((err) => {
-          console.log("use effect error");
           console.log(err);
+        });
+      api
+        .getInitialCards()
+        .then((res) => {
+          setCards(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log('isLoggedIn?', isLoggedIn);
         });
     }
   }, [isLoggedIn]);

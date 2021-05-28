@@ -16,12 +16,14 @@ const { RequestError, CastError, AuthError , ForbiddenError, NotFoundError, Conf
  */
 function login(req, res, next) {
   //gets the email and password from the REQUEST
+  console.log('login function');
   const { email, password } = req.body;
   //checks if email already exists
   User.findUserByCredentials(email, password)
     .then((user) => {
-      console.log('user:', user);
+      console.log('user in login function', user);
       if(!user) {
+        console.log('USER DOES NOT EXIST');
         throw new AuthError('Authorization Error: Incorrect email or password');
       }
       
@@ -77,7 +79,7 @@ function getOneUser(req, res, next) {
 //COMPLETE hash password before saving
 function createUser(req, res, next) {
   const { name, about, avatar, email, password } = req.body;
-
+  console.log('createUser function');
   if (!email || !password){
     return Promise.reject(new NotFoundError('email or password invalid'));
   }
@@ -85,6 +87,7 @@ function createUser(req, res, next) {
   return User.findOne({ email }).then((user) => {
     if (user) {
       //TODO if email already exists return a 409 conflict error?
+      console.log('user already exists');
       return Promise.reject(new ConflictError ('Email already exists'))
 
     };
