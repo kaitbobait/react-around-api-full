@@ -1,25 +1,21 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const auth = require("../middlewares/auth");
-const { celebrate, Joi } = require("celebrate");
+const auth = require('../middlewares/auth');
+const { celebrate, Joi } = require('celebrate');
 
 const {
   getUsers,
   updateUser,
   updateUserAvatar,
   getCurrentUser,
-} = require("../controllers/userControllers");
+} = require('../controllers/userControllers');
 
-//COMPLETE  - works 5.17
-router.get("/users", getUsers);
+router.get('/users', getUsers);
 
-//COMPLETE  - works 5.17
-//get current user information 
-router.get("/users/me", getCurrentUser);
+router.get('/users/me', getCurrentUser);
 
-// update user profile
 router.patch(
-  "/users/me",
+  '/users/me',
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(30),
@@ -29,9 +25,8 @@ router.patch(
   updateUser
 );
 
-// update user avatar
 router.patch(
-  "users/me/avatar",
+  'users/me/avatar',
   celebrate({
     body: Joi.object().keys({
       avatar: Joi.string().required(),
