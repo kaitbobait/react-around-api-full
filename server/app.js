@@ -80,12 +80,23 @@ app.use(errorLogger);
 app.use(errors());
 
 //add server error if unexpected error occurs
+// app.use((err, req, res, next) => {
+//   console.log('err:', err);
+//   const { statusCode = 500, message } = err;
+//   console.log('error log:', err);
+//   res.status(500).send({
+//     message:
+//       statusCode === 500 ? "An error occurred on the server" : err.message,
+//   });
+// });
+
 app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
+  console.log('ERR:', err.message);
+  const { statusCode, message } = err;
   console.log('error log:', err);
-  res.status(500).send({
+  res.status(statusCode).send({
     message:
-      statusCode === 500 ? "An error occurred on the server" : err.message,
+      statusCode === 500 ? "An error occurred on the server" : message,
   });
 });
 

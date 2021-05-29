@@ -89,8 +89,7 @@ function createUser(req, res, next) {
       //TODO if email already exists return a 409 conflict error?
       console.log('user already exists');
       return Promise.reject(new ConflictError ('Email already exists'))
-
-    };
+    }
 
     // hashing the password
     bcrypt
