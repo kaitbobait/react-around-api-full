@@ -6,9 +6,7 @@ const {
   ForbiddenError,
   NotFoundError,
 } = require("../middlewares/errors");
-//TODO add throw errors
 
-//COMPLETE 5.17 works
 function getCards(req, res, next) {
   console.log("step 1");
   return Cards.find({})
@@ -19,7 +17,6 @@ function getCards(req, res, next) {
     .catch(next);
 }
 
-// COMPLETE 5.17 WORKS
 function createCard(req, res, next) {
   const { name, link } = req.body;
   console.log("req.user._id:", req.user);

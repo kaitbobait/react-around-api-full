@@ -107,8 +107,9 @@ function createUser(req, res, next) {
         email: user.email,
         _id: user._id 
       }))
-      .catch(next);
-  });
+      
+  })
+  .catch(next);
 }
 
 // works
