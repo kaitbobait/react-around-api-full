@@ -1,17 +1,17 @@
-const Cards = require("../models/cards");
+const Cards = require('../models/cards');
 const {
   RequestError,
   CastError,
   AuthError,
   ForbiddenError,
   NotFoundError,
-} = require("../middlewares/errors");
+} = require('../middlewares/errors');
 
 function getCards(req, res, next) {
-  console.log("step 1");
+  console.log('step 1');
   return Cards.find({})
     .then((cards) => {
-      console.log("step 2");
+      console.log('step 2');
       res.status(200).send(cards);
     })
     .catch(next);
@@ -19,11 +19,11 @@ function getCards(req, res, next) {
 
 function createCard(req, res, next) {
   const { name, link } = req.body;
-  console.log("req.user._id:", req.user);
+  console.log('req.user._id:', req.user);
   return Cards.create({ name, link, owner: req.user._id })
     .then((card) => {
       if (!card) {
-        throw new RequestError("Invalid data");
+        throw new RequestError('Invalid data');
       }
       res.status(200).send(card);
     })
@@ -37,7 +37,7 @@ function deleteCard(req, res, next) {
       if (user) {
         res.send({ data: user });
       } else {
-        throw new NotFoundError("Card not found with ID");
+        throw new NotFoundError('Card not found with ID');
       }
     })
     .catch(next);
@@ -46,17 +46,17 @@ function deleteCard(req, res, next) {
 // works
 function addLike(req, res, next) {
   console.log('req.params', req.params);
-  console.log('req.user-like:', req.user);//._id
+  console.log('req.user-like:', req.user);// ._id
   return Cards.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } }, // add _id to the array if it's not there yet
-    { new: true }
+    { new: true },
   )
     .then((likes) => {
       if (likes) {
-        res.send(likes );
+        res.send(likes);
       } else {
-        throw new NotFoundError("Card not found with Id");
+        throw new NotFoundError('Card not found with Id');
       }
     })
     .catch(next);
@@ -69,14 +69,14 @@ function deleteLike(req, res, next) {
   return Cards.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } }, // remove _id from the array
-    { new: true }
+    { new: true },
   )
     .then((likes) => {
       if (likes) {
-        //res.send({ data: likes });
+        // res.send({ data: likes });
         res.send(likes);
       } else {
-        throw new NotFoundError("Card not found with Id");
+        throw new NotFoundError('Card not found with Id');
       }
     })
     .catch(next);
