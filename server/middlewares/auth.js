@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const { JWT_SECRET = 'dev-secret' } = process.env;
 const {
-  RequestError, CastError, AuthError, ForbiddenError, NotFoundError,
+  AuthError
 } = require('./errors');
 // create middleware for authorization
 // should verify token from the headers
