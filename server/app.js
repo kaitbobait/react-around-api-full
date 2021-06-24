@@ -15,9 +15,7 @@ const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const {
-  NotFoundError,
-} = require('./middlewares/errors');
+const { NotFoundError } = require('./errors/notFoundError');
 
 const { login, createUser } = require('./controllers/userControllers');
 
