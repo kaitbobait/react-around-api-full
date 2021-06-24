@@ -51,7 +51,6 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(
   return this.findOne({ email })
     .select('+password') // this — the User model
     .then((user) => {
-      console.log('user credentials:', user);
       // not found - rejecting the promise
       if (!user) {
         throw new AuthError('Incorrect email or password');

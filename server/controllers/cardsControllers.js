@@ -39,8 +39,6 @@ function deleteCard(req, res, next) {
 
 // works
 function addLike(req, res, next) {
-  console.log('req.params', req.params);
-  console.log('req.user-like:', req.user);// ._id
   return Cards.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } }, // add _id to the array if it's not there yet
@@ -58,8 +56,6 @@ function addLike(req, res, next) {
 
 // works
 function deleteLike(req, res, next) {
-  console.log('req.params-delete:', req.params);
-  console.log('req.user-delete:', req.user);
   return Cards.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } }, // remove _id from the array

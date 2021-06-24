@@ -1,21 +1,10 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { generateToken } = require('../utils/jwt');
 const {
   AuthError, NotFoundError, ConflictError,
 } = require('../middlewares/errors');
 
-// TODO
-/**
- * create a login controller
- * then, authenticates the email/password
- * if email/pass are correct -->  create a JWT --> //TODO expires: 1 week
- * only the _id property should be written to the JWT payload:
- * {
-  _id: "d285e3dceed844f902650f40"
-    }
- */
 function login(req, res, next) {
   // gets the email and password from the REQUEST
   const { email, password } = req.body;
@@ -80,13 +69,13 @@ function createUser(req, res, next) {
     return Promise.reject(new NotFoundError('email or password invalid'));
   }
   // check to see if email already exists
-  return User.findOne({ email }).then((user) => {
-    if (user) {
+  return User.findOne({ email }).then((exists) => {
+    if (exists) {
       return Promise.reject(new ConflictError('Email already exists'));
     }
 
     // hashing the password
-    bcrypt
+    return bcrypt
       .hash(req.body.password, 10)
       .then((hash) => User.create({
         name,
