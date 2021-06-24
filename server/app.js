@@ -10,14 +10,13 @@ const { PORT = 3000 } = process.env;
 const helmet = require('helmet');
 const { celebrate, Joi, errors } = require('celebrate');
 
-const { request } = require('express');
 const cors = require('cors');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const {
-  RequestError, CastError, AuthError, ForbiddenError, NotFoundError,
+  NotFoundError,
 } = require('./middlewares/errors');
 
 const { login, createUser } = require('./controllers/userControllers');
@@ -73,7 +72,7 @@ app.post(
 app.use('/', auth, userRouter);
 app.use('/', auth, cardRouter);
 
-app.get('*', (req, res) => {
+app.get('*', () => {
   throw new NotFoundError('Requested resource not found');
 });
 
@@ -94,10 +93,8 @@ app.use(errors());
 //   });
 // });
 
-app.use((err, req, res, next) => {
-  console.log('ERR:', err.message);
+app.use((err, req, res) => {
   const { statusCode, message } = err;
-  console.log('error log:', err);
   res.status(statusCode).send({
     message:
       statusCode === 500 ? 'An error occurred on the server' : message,
@@ -107,7 +104,6 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   // if everything works fine, the console will show which port the application is listening to
   console.log(`App listening at port ${PORT}, k byeBYE!`);
-  console.log('Port is:', PORT);
 });
 
 // app.listen('https://kaitbobait.students.nomoreparties.site');

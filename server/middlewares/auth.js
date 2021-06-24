@@ -1,17 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const { JWT_SECRET = 'dev-secret' } = process.env;
-const {
-  AuthError
-} = require('./errors');
-// create middleware for authorization
-// should verify token from the headers
-// If everything's fine with the token, the middleware should add the payload token to the request object and call next():
-// code: req.user = payload;
-//        next();
-// if something is wrong - return 401 error
-
-console.log('auth: um hello?');
+const { AuthError } = require('./errors');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;

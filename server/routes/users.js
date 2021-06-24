@@ -2,7 +2,6 @@ const express = require('express');
 
 const router = express.Router();
 const { celebrate, Joi } = require('celebrate');
-const auth = require('../middlewares/auth');
 
 const {
   getUsers,
@@ -11,10 +10,8 @@ const {
   getCurrentUser,
 } = require('../controllers/userControllers');
 
-// COMPLETE  - works 5.17
 router.get('/users', getUsers);
 
-// COMPLETE  - works 5.17
 // get current user information
 router.get('/users/me', getCurrentUser);
 

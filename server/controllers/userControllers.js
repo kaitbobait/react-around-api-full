@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { generateToken } = require('../utils/jwt');
 const {
-  RequestError, CastError, AuthError, ForbiddenError, NotFoundError, ConflictError,
+  AuthError, NotFoundError, ConflictError,
 } = require('../middlewares/errors');
 
 // TODO
@@ -18,14 +18,11 @@ const {
  */
 function login(req, res, next) {
   // gets the email and password from the REQUEST
-  console.log('login function');
   const { email, password } = req.body;
   // checks if email already exists
   User.findUserByCredentials(email, password)
     .then((user) => {
-      console.log('user in login function', user);
       if (!user) {
-        console.log('USER DOES NOT EXIST');
         throw new AuthError('Authorization Error: Incorrect email or password');
       }
 
@@ -40,7 +37,6 @@ function login(req, res, next) {
 }
 
 function getCurrentUser(req, res, next) {
-  console.log('user', req.user);
   return User.findById(req.user._id)
     .then((user) => {
     // console.log(user);
@@ -76,20 +72,16 @@ function getOneUser(req, res, next) {
     .catch(next);
 }
 
-// COMPLETE hash password before saving
 function createUser(req, res, next) {
   const {
     name, about, avatar, email, password,
   } = req.body;
-  console.log('createUser function');
   if (!email || !password) {
     return Promise.reject(new NotFoundError('email or password invalid'));
   }
   // check to see if email already exists
   return User.findOne({ email }).then((user) => {
     if (user) {
-      // TODO if email already exists return a 409 conflict error?
-      console.log('user already exists');
       return Promise.reject(new ConflictError('Email already exists'));
     }
 

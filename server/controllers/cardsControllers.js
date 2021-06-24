@@ -1,17 +1,12 @@
 const Cards = require('../models/cards');
 const {
   RequestError,
-  CastError,
-  AuthError,
-  ForbiddenError,
   NotFoundError,
 } = require('../middlewares/errors');
 
 function getCards(req, res, next) {
-  console.log('step 1');
   return Cards.find({})
     .then((cards) => {
-      console.log('step 2');
       res.status(200).send(cards);
     })
     .catch(next);
@@ -19,7 +14,6 @@ function getCards(req, res, next) {
 
 function createCard(req, res, next) {
   const { name, link } = req.body;
-  console.log('req.user._id:', req.user);
   return Cards.create({ name, link, owner: req.user._id })
     .then((card) => {
       if (!card) {
