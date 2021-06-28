@@ -2,6 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const { celebrate, Joi } = require('celebrate');
+const validator = require('validator');
 
 const {
   getCards,
@@ -11,6 +12,14 @@ const {
   deleteLike,
 } = require('../controllers/cardsControllers');
 
+function validateUrl(string) {
+  const result = validator.isURL(string);
+  if (result) {
+    return string;
+  }
+  throw new Error('URL validation err');
+}
+
 router.get('/cards', getCards);
 
 router.post(
@@ -18,7 +27,7 @@ router.post(
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(30),
-      link: Joi.string().required().uri(),
+      link: Joi.string().required().custom(validateUrl),
     }),
   }),
   createCard,
