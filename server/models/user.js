@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const { AuthError } = require('../errors/authError');
+const AuthError = require('../errors/authError');
 
 const userSchema = new mongoose.Schema({
   // username, string from 2 to 30 characters, required field

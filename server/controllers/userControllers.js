@@ -1,9 +1,9 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const { generateToken } = require('../utils/jwt');
-const { AuthError } = require('../errors/authError');
-const { NotFoundError } = require('../errors/notFoundError');
-const { ConflictError } = require('../errors/conflictError');
+const AuthError = require('../errors/authError');
+const NotFoundError = require('../errors/notFoundError');
+const ConflictError = require('../errors/conflictError');
 
 function login(req, res, next) {
   // gets the email and password from the REQUEST
